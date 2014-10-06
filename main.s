@@ -95,6 +95,11 @@ LoadPalettesLoop:
 loop:
   JMP loop
 
+NMI:
+  JSR read_controller1
+  ; ...
+  RTI
+
 read_controller1:
   ; latch
   LDA #$01
@@ -118,11 +123,6 @@ read_controller1_values:
 
 end_read_controller1:
   RTS
-
-NMI:
-  JSR read_controller1
-  ; ...
-  RTI
 
 palette:
   .db $0F,$31,$32,$33,$0F,$35,$36,$37,$0F,$39,$3A,$3B,$0F,$3D,$3E,$0F
