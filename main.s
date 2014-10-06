@@ -17,6 +17,7 @@ BANKS       1
 
 .ENUM $0000
 buttons_pressed DB
+sleeping        DB
 .ENDE
 
 
@@ -66,6 +67,7 @@ clrmem:
   ; initialize variables in ram
   LDA #$00
   STA buttons_pressed
+  STA sleeping
 
 vblankwait2:      ; Second wait for vblank, PPU is ready after this
   BIT $2002
@@ -93,11 +95,34 @@ LoadPalettesLoop:
   STA $2000
 
 loop:
+  INC sleeping
+sleep:
+  LDA sleeping
+  BNE sleep
+
+  JSR read_controller1
+
+  ; game logic
+
   JMP loop
 
 NMI:
-  JSR read_controller1
-  ; ...
+  PHA
+  TXA
+  PHA
+  TYA
+  PHA
+
+  ; drawing code
+
+  LDA #$00
+  STA sleeping
+
+  PLA
+  TAY
+  PLA
+  TAX
+  PLA
   RTI
 
 read_controller1:
