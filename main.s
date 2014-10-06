@@ -67,26 +67,6 @@ clrmem:
   LDA #$00
   STA buttons_pressed
 
-  LDA #$32
-  STA $0201 ; set the sprite number to display
-  LDA #$00
-  STA $0202 ; set the sprite attributes (palette, flipping, etc)
-
-  LDA #$33
-  STA $0205 ; set the sprite number to display
-  LDA #$00
-  STA $0206 ; set the sprite attributes (palette, flipping, etc)
-
-  LDA #$34
-  STA $0209 ; set the sprite number to display
-  LDA #$00
-  STA $020A ; set the sprite attributes (palette, flipping, etc)
-
-  LDA #$35
-  STA $020D ; set the sprite number to display
-  LDA #$00
-  STA $020E ; set the sprite attributes (palette, flipping, etc)
-
 vblankwait2:      ; Second wait for vblank, PPU is ready after this
   BIT $2002
   BPL vblankwait2
